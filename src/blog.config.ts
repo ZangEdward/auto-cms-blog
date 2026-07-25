@@ -27,5 +27,9 @@ export const blogConfig = {
       avatar: "/images/avatar.png",
       primaryHue: 250,
     },
+    aero7: {
+      homeBg: "/images/home-bg.webp",
+      accentColor: "#2a7fd0",
+    },
   },
 } as const satisfies SiteConfig;

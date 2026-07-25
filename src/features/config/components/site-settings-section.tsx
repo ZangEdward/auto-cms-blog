@@ -6,6 +6,7 @@ import { Field } from "@/features/config/components/site-settings-fields";
 import { SocialLinksEditor } from "@/features/config/components/social-links-editor";
 import { DefaultThemeSettings } from "@/features/config/components/themes/default-theme-settings";
 import { FuwariThemeSettings } from "@/features/config/components/themes/fuwari-theme-settings";
+import { Aero7ThemeSettings } from "@/features/config/components/themes/aero7-theme-settings";
 import type { SystemConfig } from "@/features/config/config.schema";
 import { m } from "@/paraglide/messages";
 
@@ -15,6 +16,8 @@ function ThemeSettingsContent() {
       return <DefaultThemeSettings />;
     case "fuwari":
       return <FuwariThemeSettings />;
+    case "aero7":
+      return <Aero7ThemeSettings />;
     default: {
       __THEME_NAME__ satisfies never;
       return null;

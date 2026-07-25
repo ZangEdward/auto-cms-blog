@@ -270,6 +270,27 @@ function createFuwariThemeSiteConfigInputFormSchema(messages: Messages) {
   });
 }
 
+function createAero7ThemeSiteConfigSchema() {
+  return z.object({
+    homeBg: createBackgroundImageRefSchema(),
+    accentColor: z.string().optional(),
+  });
+}
+
+function createAero7ThemeSiteConfigInputSchema() {
+  return z.object({
+    homeBg: createBackgroundImageRefSchema().optional(),
+    accentColor: z.string().optional(),
+  });
+}
+
+function createAero7ThemeSiteConfigInputFormSchema(messages: Messages) {
+  return z.object({
+    homeBg: createBackgroundImageRefFormSchema(messages).optional(),
+    accentColor: z.string().optional(),
+  });
+}
+
 export const defaultThemeBackgroundSchema =
   createDefaultThemeBackgroundSchema();
 export const defaultThemeBackgroundInputSchema =
@@ -281,6 +302,9 @@ export const defaultThemeSiteConfigInputSchema =
 export const fuwariThemeSiteConfigSchema = createFuwariThemeSiteConfigSchema();
 export const fuwariThemeSiteConfigInputSchema =
   createFuwariThemeSiteConfigInputSchema();
+export const aero7ThemeSiteConfigSchema = createAero7ThemeSiteConfigSchema();
+export const aero7ThemeSiteConfigInputSchema =
+  createAero7ThemeSiteConfigInputSchema();
 
 export const FullSiteConfigSchema = z.object({
   title: createSiteTextSchema(120),
@@ -298,6 +322,7 @@ export const FullSiteConfigSchema = z.object({
   theme: z.object({
     default: defaultThemeSiteConfigSchema,
     fuwari: fuwariThemeSiteConfigSchema,
+    aero7: aero7ThemeSiteConfigSchema,
   }),
 });
 
@@ -322,6 +347,7 @@ export function createSiteConfigInputFormSchema(messages: Messages) {
         default:
           createDefaultThemeSiteConfigInputFormSchema(messages).optional(),
         fuwari: createFuwariThemeSiteConfigInputFormSchema(messages).optional(),
+        aero7: createAero7ThemeSiteConfigInputFormSchema(messages).optional(),
       })
       .optional(),
   });
@@ -346,6 +372,7 @@ export const SiteConfigInputSchema = z.object({
     .object({
       default: defaultThemeSiteConfigInputSchema.optional(),
       fuwari: fuwariThemeSiteConfigInputSchema.optional(),
+      aero7: aero7ThemeSiteConfigInputSchema.optional(),
     })
     .optional(),
 });
