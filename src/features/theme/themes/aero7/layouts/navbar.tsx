@@ -1,6 +1,6 @@
 import { Link, useRouteContext } from "@tanstack/react-router";
 import { Home, Menu, Search, UserIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ThemeToggle } from "@/components/common/theme-toggle";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { NavOption, UserInfo } from "@/features/theme/contract/layouts";
@@ -12,119 +12,91 @@ interface NavbarProps {
   onMenuClick: () => void;
   isLoading?: boolean;
   user?: UserInfo;
-  bannerHeightVh: number;
 }
-
-const NAVBAR_HEIGHT_REM = 4.5;
-const MAIN_OVERLAP_REM = 3.5;
 
 export function Navbar({
   onMenuClick,
   user,
   navOptions,
   isLoading,
-  bannerHeightVh,
 }: NavbarProps) {
   const { siteConfig } = useRouteContext({ from: "__root__" });
-  const [isHidden, setIsHidden] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Calculate threshold based on banner height and layout
-      const bannerHeightPx = window.innerHeight * (bannerHeightVh / 100);
-      const navbarHeightPx = NAVBAR_HEIGHT_REM * 16;
-      const mainOverlapPx = MAIN_OVERLAP_REM * 16;
-      const extraPaddingPx = 16;
-
-      const threshold =
-        bannerHeightPx - navbarHeightPx - mainOverlapPx - extraPaddingPx;
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-
-      setIsHidden(scrollTop >= threshold);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    // Initial check
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [bannerHeightVh]);
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
     <div
-      id="fuwari-navbar-wrapper"
-      className={`z-50 sticky top-0 transition-all duration-300 ease-in-out ${
-        isHidden
-          ? "-translate-y-16 opacity-0 pointer-events-none"
-          : "translate-y-0 opacity-100"
-      }`}
+      id="fuwari-navbar"
+      className="fuwari-onload-animation aero-titlebar"
+      style={{ animationDelay: "0ms" }}
     >
-      <div
-        id="fuwari-navbar"
-        className="fuwari-onload-animation"
-        style={{ animationDelay: "0ms" }}
-      >
-        <div className="fuwari-card-base overflow-visible! rounded-t-none! mx-auto flex items-center justify-between px-4 h-18 max-w-(--fuwari-page-width)">
-          <Link
-            to="/"
-            className="fuwari-expand-animation rounded-lg h-13 px-5 font-bold active:scale-95 flex items-center"
-          >
-            <Home
-              size={28}
-              strokeWidth={1.5}
-              className="text-(--fuwari-primary) mr-2 shrink-0"
-            />
-            <span className="text-(--fuwari-primary) text-base">
-              {siteConfig.title}
-            </span>
-          </Link>
+      {/* 左侧：站点标题（窗口标题文字 + 白光） */}
+      {!collapsed && (
+        <Link
+          to="/"
+          className="title-bar-text aero-brand active:scale-95"
+          aria-label={siteConfig.title}
+        >
+          <Home
+            size={24}
+            strokeWidth={1.5}
+            className="aero-brand-icon mr-2 shrink-0"
+          />
+          <span className="aero-brand-text">{siteConfig.title}</span>
+        </Link>
+      )}
 
-          <nav className="hidden md:flex items-center gap-1">
-            {navOptions.map((option) => (
-              <Link
-                key={option.id}
-                to={option.to}
-                className="fuwari-expand-animation rounded-lg h-11 font-bold px-5 active:scale-95 flex items-center fuwari-text-75 hover:text-(--fuwari-primary)"
-                activeProps={{
-                  className: "!text-[var(--fuwari-primary)]",
-                }}
-              >
-                {option.label}
-              </Link>
-            ))}
-          </nav>
+      {/* 中间：导航标签（Aero 标签页风格） */}
+      {!collapsed && (
+        <nav className="aero-tabs">
+          {navOptions.map((option) => (
+            <Link
+              key={option.id}
+              to={option.to}
+              className="aero-tab"
+              activeProps={{ className: "aero-tab-active" }}
+            >
+              {option.label}
+            </Link>
+          ))}
+        </nav>
+      )}
 
-          <div className="flex items-center gap-1">
+      {/* 右侧：UI 按钮（Win7 玻璃按钮）+ 窗口控制按钮 */}
+      <div className="aero-nav-actions">
+        {!collapsed && (
+          <>
             <Link
               to="/search"
-              className="hidden lg:flex items-center h-11 mr-2 rounded-lg bg-black/4 hover:bg-black/6 dark:bg-white/5 dark:hover:bg-white/10 transition-all active:scale-95 group w-52"
+              className="aero-navbtn fuwari-btn-regular hidden lg:flex items-center h-11 mr-1 rounded-lg w-52"
               aria-label={m.nav_search()}
             >
               <Search
                 size={18}
-                className="ml-3 transition-colors text-black/30 dark:text-white/30 group-hover:text-black/50 dark:group-hover:text-white/50"
+                className="ml-3 transition-colors"
                 strokeWidth={1.25}
               />
-              <span className="ml-2 text-black/50 dark:text-white/50 text-sm bg-transparent outline-none truncate">
+              <span className="ml-2 text-sm bg-transparent outline-none truncate">
                 {m.nav_search()}
               </span>
             </Link>
             <Link
               to="/search"
-              className="lg:hidden fuwari-expand-animation rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 fuwari-text-75 hover:text-(--fuwari-primary)"
+              className="aero-navbtn fuwari-btn-regular lg:hidden flex items-center justify-center h-11 w-11 rounded-lg"
               aria-label={m.nav_search()}
             >
               <Search size={18} strokeWidth={1.25} />
             </Link>
-            <ThemeToggle className="fuwari-expand-animation rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 fuwari-text-75 hover:text-(--fuwari-primary) p-0! bg-transparent! [&_svg]:w-4.5! [&_svg]:h-4.5! [&_div]:w-auto! [&_div]:h-auto!" />
-            <LanguageSwitcher className="fuwari-expand-animation rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 fuwari-text-75 hover:text-(--fuwari-primary) p-0! bg-transparent! [&_svg]:w-4.5! [&_svg]:h-4.5!" />
+            <ThemeToggle className="aero-navbtn fuwari-btn-regular flex items-center justify-center h-11 w-11 rounded-lg p-0! [&_svg]:w-4.5! [&_svg]:h-4.5! [&_div]:w-auto! [&_div]:h-auto!" />
+            <LanguageSwitcher className="aero-navbtn fuwari-btn-regular flex items-center justify-center h-11 w-11 rounded-lg p-0!" />
             <div className="hidden md:flex items-center">
               {isLoading ? (
                 <Skeleton className="w-9 h-9 rounded-lg" />
               ) : user ? (
                 <Link
                   to="/profile"
-                  className="fuwari-expand-animation rounded-lg h-11 w-11 flex items-center justify-center active:scale-90"
+                  className="aero-navbtn fuwari-btn-regular flex items-center justify-center h-11 w-11 rounded-lg"
                 >
                   {user.image ? (
                     <img
@@ -133,11 +105,11 @@ export function Navbar({
                       className="w-8 h-8 rounded-md object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-(--fuwari-btn-regular-bg) flex items-center justify-center">
+                    <div className="w-full h-full flex items-center justify-center">
                       <UserIcon
                         size={18}
                         strokeWidth={1.25}
-                        className="fuwari-text-50"
+                        className="aero-icon-faint"
                       />
                     </div>
                   )}
@@ -145,7 +117,7 @@ export function Navbar({
               ) : (
                 <Link
                   to="/login"
-                  className="fuwari-expand-animation rounded-lg h-11 w-11 flex items-center justify-center active:scale-90 fuwari-text-75 hover:text-(--fuwari-primary)"
+                  className="aero-navbtn fuwari-btn-regular flex items-center justify-center h-11 w-11 rounded-lg"
                   aria-label={m.nav_login()}
                 >
                   <UserIcon size={18} strokeWidth={1.25} />
@@ -153,14 +125,35 @@ export function Navbar({
               )}
             </div>
             <button
-              className="fuwari-expand-animation rounded-lg w-11 h-11 flex items-center justify-center active:scale-90 md:hidden fuwari-text-75 hover:text-(--fuwari-primary)"
+              className="aero-navbtn fuwari-btn-regular flex items-center justify-center h-11 w-11 rounded-lg md:hidden"
               onClick={onMenuClick}
               aria-label={m.common_open_menu()}
               type="button"
             >
               <Menu size={18} strokeWidth={1.25} />
             </button>
-          </div>
+          </>
+        )}
+
+        {/* 窗口控制按钮（最小化 / 最大化 / 关闭）—— 仿 Windows 7 标题栏 */}
+        <div className="title-bar-controls">
+          <button
+            aria-label="Minimize"
+            type="button"
+            onClick={() => setCollapsed(true)}
+          />
+          <button
+            aria-label="Maximize"
+            title="回到顶部"
+            type="button"
+            onClick={scrollTop}
+          />
+          <button
+            aria-label="Close"
+            title="回到顶部"
+            type="button"
+            onClick={scrollTop}
+          />
         </div>
       </div>
     </div>

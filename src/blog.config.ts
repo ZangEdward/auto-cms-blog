@@ -21,6 +21,15 @@ export const blogConfig = {
   theme: {
     default: {
       navBarName: "导航栏名称",
+      // aero7 等主题复用的后台"背景图"设置（homeImage/globalImage + 模糊/透明度）
+      background: {
+        homeImage: "/images/aero-wallpaper.jpg",
+        globalImage: "",
+        light: { opacity: 0.15 },
+        dark: { opacity: 0.1 },
+        backdropBlur: 8,
+        transitionDuration: 600,
+      },
     },
     fuwari: {
       homeBg: "/images/home-bg.webp",

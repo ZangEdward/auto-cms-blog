@@ -84,7 +84,9 @@ function migrateSocial(social: unknown): SocialLink[] {
 export function resolveSiteConfig(
   config: SystemConfig | null | undefined,
 ): SiteConfig {
-  const configDefaultBackground = config?.site?.theme?.default?.background;
+  const configDefaultBackground =
+    config?.site?.theme?.default?.background ??
+    blogConfig.theme.default.background;
 
   return FullSiteConfigSchema.parse({
     title: config?.site?.title ?? blogConfig.title,

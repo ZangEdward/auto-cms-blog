@@ -1,10 +1,10 @@
 import { useController, useFormContext } from "react-hook-form";
-import { AssetUploadField } from "@/features/config/components/asset-upload-field";
 import { Field } from "@/features/config/components/site-settings-fields";
+import { DefaultThemeSettings } from "@/features/config/components/themes/default-theme-settings";
 import type { SystemConfig } from "@/features/config/config.schema";
 import { m } from "@/paraglide/messages";
 
-const DEFAULT_ACCENT = "#2a7fd0";
+const DEFAULT_ACCENT = "#3c7fb1";
 
 function Aero7AccentColorField() {
   const { control } = useFormContext<SystemConfig>();
@@ -42,21 +42,11 @@ function Aero7AccentColorField() {
 }
 
 export function Aero7ThemeSettings() {
-  const {
-    formState: { errors },
-  } = useFormContext<SystemConfig>();
-
   return (
     <>
-      <AssetUploadField
-        name="site.theme.aero7.homeBg"
-        assetPath="themes/aero7/home-bg.webp"
-        accept=".png,.webp,.jpg,.jpeg"
-        label={m.settings_site_field_home_image()}
-        hint={m.settings_site_field_home_image_hint()}
-        placeholder="/images/asset/themes/aero7/home-bg.webp or https://picsum.photos/1600/900"
-        error={errors.site?.theme?.aero7?.homeBg?.message}
-      />
+      {/* 复用"默认主题"的后台背景图设置（homeImage / globalImage / 模糊 / 透明度），
+       * aero7 的页面背景与磨砂效果即由它驱动，可在后台随时更换。 */}
+      <DefaultThemeSettings />
       <Aero7AccentColorField />
     </>
   );

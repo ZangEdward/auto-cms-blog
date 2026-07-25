@@ -50,8 +50,13 @@ button {
     --fuwari-primary-hover: var(--aero-primary-hover);
     --fuwari-primary-active: var(--aero-primary-active);
 
-    /* 页面背景：壁纸（固定附着，透出玻璃面板） */
-    --fuwari-page-bg: url(/images/aero-wallpaper.jpg);
+    /* 页面背景兜底（无后台背景图时显示）；真实背景由后台 BackgroundLayer 提供 */
+    --fuwari-page-bg: linear-gradient(
+      160deg,
+      #cfe3f3 0%,
+      #eaf3fa 45%,
+      #d4e6f4 100%
+    );
 
     /* 玻璃面板表面（半透明，叠在壁纸上） */
     --fuwari-card-bg: rgba(216, 225, 231, 0.32);
@@ -400,8 +405,13 @@ button {
   }
 }
 
-/* ===== 顶部导航栏：Aero 玻璃条（高光渐变 + 模糊）===== */
+/* ===== 顶部导航栏：仿 Windows 7 窗口标题栏（玻璃高光 + 模糊）===== */
 #fuwari-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 14px;
   background: var(--aero-grad);
   backdrop-filter: blur(10px) saturate(150%);
   -webkit-backdrop-filter: blur(10px) saturate(150%);
@@ -417,6 +427,98 @@ button {
 .dark #fuwari-navbar {
   color: #eaf6ff;
   text-shadow: 0 1px 0 rgba(10, 30, 55, 0.6);
+}
+
+/* 站点标题（窗口标题文字，带白光） */
+.aero-brand {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  white-space: nowrap;
+  padding-top: 0;
+}
+.aero-brand-icon {
+  color: #143a5e;
+}
+.aero-brand-text {
+  color: #143a5e;
+}
+.dark .aero-brand-icon,
+.dark .aero-brand-text {
+  color: #eaf6ff;
+}
+.dark .title-bar-text {
+  color: #eaf6ff;
+  text-shadow: 0 0 8px #0d2540;
+}
+
+/* 导航标签（Aero 标签页风格） */
+.aero-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  justify-content: center;
+  overflow-x: auto;
+}
+.aero-tab {
+  padding: 5px 16px;
+  border-radius: 6px 6px 0 0;
+  color: #143a5e;
+  font-weight: 600;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-bottom: none;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  white-space: nowrap;
+}
+.aero-tab:hover {
+  background: rgba(255, 255, 255, 0.45);
+  color: var(--aero-primary);
+}
+.aero-tab-active {
+  background: linear-gradient(to bottom, #ffffffd9, #d6ebfb);
+  color: var(--aero-primary-active);
+  box-shadow:
+    inset 0 1px 0 #fff,
+    0 1px 3px rgba(10, 30, 55, 0.25);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+.dark .aero-tab {
+  color: #eaf6ff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  text-shadow: 0 1px 0 rgba(10, 30, 55, 0.6);
+}
+.dark .aero-tab:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #bfe6ff;
+}
+.dark .aero-tab-active {
+  background: linear-gradient(to bottom, #2c4a68, #16304a);
+  color: #bfe6ff;
+}
+
+/* 右侧操作区 */
+.aero-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.aero-nav-actions .title-bar-controls {
+  margin-left: 6px;
+}
+.aero-icon-faint {
+  color: #143a5e;
+}
+.dark .aero-icon-faint {
+  color: #eaf6ff;
 }
 
 /* 让 7.css 的窗口/标题栏在需要时也能正确显示（若页面直接使用 .window） */
