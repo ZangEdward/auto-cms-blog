@@ -28,8 +28,8 @@ export const blogConfig = {
       primaryHue: 250,
     },
     aero7: {
-      homeBg: "/images/home-bg.webp",
-      accentColor: "#2a7fd0",
+      homeBg: "/images/aero-wallpaper.jpg",
+      accentColor: "#3c7fb1",
     },
   },
 } as const satisfies SiteConfig;
