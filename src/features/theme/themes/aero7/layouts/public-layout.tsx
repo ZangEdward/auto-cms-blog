@@ -54,7 +54,7 @@ export function PublicLayout({
         style={{ height: `${bannerHeightVh}vh` }}
       >
         <img
-          src={siteConfig.theme.aero7.homeBg}
+          src={siteConfig.theme.aero7?.homeBg ?? "/images/home-bg.webp"}
           alt="banner"
           fetchPriority="high"
           className="w-full h-full object-cover object-center"

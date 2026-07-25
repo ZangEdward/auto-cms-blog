@@ -132,6 +132,13 @@ export function resolveSiteConfig(
           config?.site?.theme?.fuwari?.primaryHue ??
           blogConfig.theme.fuwari.primaryHue,
       },
+      aero7: {
+        homeBg:
+          config?.site?.theme?.aero7?.homeBg ?? blogConfig.theme.aero7.homeBg,
+        accentColor:
+          config?.site?.theme?.aero7?.accentColor ??
+          blogConfig.theme.aero7.accentColor,
+      },
     },
   });
 }
