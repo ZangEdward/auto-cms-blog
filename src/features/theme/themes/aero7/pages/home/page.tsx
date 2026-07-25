@@ -52,8 +52,8 @@ export function HomePage({ posts, pinnedPosts, popularPosts }: HomePageProps) {
     useViewCounts(allSlugs);
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col rounded-(--fuwari-radius-large) bg-(--fuwari-card-bg) py-1 md:py-0 md:bg-transparent md:gap-4">
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col rounded-(--fuwari-radius-large) bg-(--fuwari-card-bg) py-1 md:py-0 md:bg-transparent md:gap-6">
         {mergedPosts.map(({ post, pinned, popular }, i) => (
           <div
             key={post.slug}

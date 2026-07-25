@@ -45,7 +45,7 @@ export function PublicLayout({
 
       {/* Main content（z-30 浮在背景层之上） */}
       <div
-        className="relative z-30 mx-auto px-0 md:px-4 pb-8 grid grid-cols-1 lg:grid-cols-[17.5rem_1fr] gap-4"
+        className="relative z-30 mx-auto px-0 md:px-4 pb-8 grid grid-cols-1 lg:grid-cols-[16rem_1fr] gap-6"
         style={{ maxWidth: "var(--fuwari-page-width)" }}
       >
         {/* Sidebar Column */}
