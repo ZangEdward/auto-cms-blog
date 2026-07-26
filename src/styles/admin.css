@@ -100,3 +100,33 @@
 .admin-layout .ProseMirror li {
   margin: 0.25rem 0;
 }
+
+/* 管理后台滚动条保持默认主题风格，不受 aero7 / 7.css 的 Win7 滚动条影响。
+ * 这些规则放在非 @layer（未分层）上下文，且带 .admin-layout 前缀，
+ * 特异性高于 7.css 的全局 ::-webkit-scrollbar 规则，可稳定覆盖。 */
+.admin-layout ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.admin-layout ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.admin-layout ::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 9999px;
+}
+.admin-layout ::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--accent));
+}
+.admin-layout ::-webkit-scrollbar-button {
+  display: none;
+}
+.admin-layout {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted)) transparent;
+}
+/* 文本选区高亮也保持默认主题 */
+.admin-layout ::selection {
+  background-color: hsl(var(--primary) / 0.2);
+  color: inherit;
+}
