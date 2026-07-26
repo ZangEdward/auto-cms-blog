@@ -13,8 +13,8 @@ import packageJson from "./package.json";
 import { themeNames, themes } from "./src/features/theme/registry";
 
 const buildEnvSchema = z.object({
-  // 默认构建 aero7 主题；仍可用 THEME=default / THEME=fuwari 覆盖
-  THEME: z.enum(themeNames).catch("aero7"),
+  // 默认主题为 default；通过 THEME=aero7 / THEME=fuwari 等环境变量切换
+  THEME: z.enum(themeNames).catch("default"),
 });
 
 const config = defineConfig(({ mode }) => {
