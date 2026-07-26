@@ -1,7 +1,6 @@
 import { useRouteContext } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { PublicLayoutProps } from "@/features/theme/contract/layouts";
-import { BackgroundLayer } from "@/features/theme/themes/default/components/background-layer";
 import { BackToTop } from "../components/control/back-to-top";
 import { Sidebar } from "../components/sidebar";
 import { Footer } from "./footer";
@@ -18,10 +17,28 @@ export function PublicLayout({
   const { siteConfig } = useRouteContext({ from: "__root__" });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // 让 7.css 的 Win7 滚动条样式作用于整个文档
+  useEffect(() => {
+    document.documentElement.classList.add("has-scrollbar");
+    return () => document.documentElement.classList.remove("has-scrollbar");
+  }, []);
+
+  // aero7 使用自己的 homeBg；未设置则兜底到主题默认壁纸
+  const aero7Bg = siteConfig.theme.aero7?.homeBg || "/images/aero-wallpaper.jpg";
+
   return (
     <div className="aero7-theme relative min-h-screen">
-      {/* 后台"背景图"设置驱动的背景层（含 backdropBlur 磨砂模糊），可在后台随时更换 */}
-      <BackgroundLayer background={siteConfig.theme.default.background} />
+      {/* 壁纸背景层：固定覆盖、居中、无过度遮罩，让壁纸正常显示 */}
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat bg-fixed"
+        style={{ backgroundImage: `url("${aero7Bg}")` }}
+      />
+      {/* 极淡的全局压暗层，仅提升文字可读性，不遮住壁纸 */}
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 -z-10 bg-gradient-to-b from-white/10 via-transparent to-white/25 dark:from-black/20 dark:via-transparent dark:to-black/40 pointer-events-none"
+      />
 
       <MobileMenu
         navOptions={navOptions}

@@ -36,15 +36,10 @@ export function Tags() {
   if (tags.length === 0) return null;
 
   return (
-    <div className="fuwari-card-base pb-4 transition-all duration-300">
-      <div className="font-bold text-lg fuwari-text-90 relative ml-6 mt-4 mb-2">
-        <span
-          className="absolute -left-4 top-[5.5px] w-1 h-4 rounded-md"
-          style={{ backgroundColor: "var(--fuwari-primary)" }}
-        />
-        {m.tags_title()}
-      </div>
-
+    <div
+      className="fuwari-card-base pb-4 transition-all duration-300"
+      data-title={m.tags_title()}
+    >
       <div
         ref={containerRef}
         className={`px-4 flex flex-wrap gap-2 overflow-hidden transition-[max-height] duration-300 ease-in-out ${
