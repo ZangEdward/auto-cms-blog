@@ -128,8 +128,10 @@ jobs:
         run: |
           PURGE_DOMAIN=${CDN_DOMAIN:-$DOMAIN}
           echo "Purging CDN cache for $PURGE_DOMAIN"
+          # Cloudflare prefix purge 要求完整 URL（含 scheme），否则会返回 success 但实际未清除，
+          # 导致用户长期拿到一年前的旧 HTML（表现为"部署了却看不见"）。
           curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" \
             -H "Authorization: Bearer $CLOUDFLARE_PURGE_API_TOKEN" \
             -H "Content-Type: application/json" \
-            --data '{"prefixes":["'$PURGE_DOMAIN'"]}'
+            --data '{"prefixes":["https://'"$PURGE_DOMAIN"'/"]}'
           echo ""
