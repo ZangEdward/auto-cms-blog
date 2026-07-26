@@ -17,10 +17,17 @@ export function PublicLayout({
   const { siteConfig } = useRouteContext({ from: "__root__" });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // 让 7.css 的 Win7 滚动条样式作用于整个文档
+  // 让 7.css 的 Win7 滚动条样式作用于整个文档。
+  // 同时给 <html> 打上 aero7-theme 标记，使 aero7 的全局样式（滚动条/选区）
+  // 仅作用于公共博客页，不污染后台/设置界面（后台用 default 主题）。
   useEffect(() => {
-    document.documentElement.classList.add("has-scrollbar");
-    return () => document.documentElement.classList.remove("has-scrollbar");
+    const root = document.documentElement;
+    root.classList.add("has-scrollbar");
+    root.classList.add("aero7-theme");
+    return () => {
+      root.classList.remove("has-scrollbar");
+      root.classList.remove("aero7-theme");
+    };
   }, []);
 
   // aero7 使用自己的 homeBg；未设置则兜底到主题默认壁纸

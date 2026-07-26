@@ -14,8 +14,9 @@
 @plugin "@tailwindcss/typography";
 
 /* 7.css 会给所有原生 <button> 强加 min-width:75px，把导航小图标按钮撑宽。
- * 这里只取消最小宽度下限，保留其 Windows 7 按钮外观。 */
-button {
+ * 这里只取消最小宽度下限，保留其 Windows 7 按钮外观。
+ * 仅作用于 aero7 主题内部，避免影响后台/设置界面。 */
+.aero7-theme button {
   min-width: auto;
 }
 
@@ -573,26 +574,29 @@ button {
   animation: 300ms fuwari-fade-in-up ease-out forwards;
 }
 
-::selection {
+/* 仅在 aero7 主题范围内自定义选区高亮，不影响后台/设置界面 */
+.aero7-theme ::selection {
   background-color: var(--fuwari-selection-bg);
   color: inherit;
 }
 
 /* 滚动条：WebKit 由 7.css 全局 + .has-scrollbar 提供 Win7 风格；
-   Firefox 用标准属性做近似兜底。 */
-html {
+   Firefox 用标准属性做近似兜底。
+   全部限定在 html.aero7-theme（仅在 aero7 公共页给 <html> 打上该类），
+   不污染后台/设置界面的默认滚动条。 */
+html.aero7-theme {
   scrollbar-width: auto;
   scrollbar-color: #3c7fb1 #f0f0f0;
 }
-.dark html {
+.dark html.aero7-theme {
   scrollbar-color: #4f93c4 #1a2635;
 }
 
 /* 全局隐藏 7.css 期望 .has-scrollbar 才隐藏的冗余滚动条箭头按钮，
    让 Win7 风格滚动条不依赖额外类也能正确显示。 */
-::-webkit-scrollbar-button:vertical:end:decrement,
-::-webkit-scrollbar-button:vertical:start:increment,
-::-webkit-scrollbar-button:horizontal:start:increment,
-::-webkit-scrollbar-button:horizontal:end:decrement {
+html.aero7-theme::-webkit-scrollbar-button:vertical:end:decrement,
+html.aero7-theme::-webkit-scrollbar-button:vertical:start:increment,
+html.aero7-theme::-webkit-scrollbar-button:horizontal:start:increment,
+html.aero7-theme::-webkit-scrollbar-button:horizontal:end:decrement {
   display: none;
 }
