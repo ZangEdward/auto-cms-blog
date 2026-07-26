@@ -25,8 +25,9 @@
     scroll-behavior: smooth;
   }
 
-  /* 全局字体：Segoe UI（Vista/7 默认） */
-  body {
+  /* 全局字体：Segoe UI（Vista/7 默认）；仅作用于 aero7 公共页，
+     不污染后台/设置界面的默认字体。 */
+  html.aero7-theme body {
     font-family: "Segoe UI", "SegoeUI", Tahoma, "Microsoft YaHei", sans-serif;
   }
 
@@ -133,8 +134,9 @@
     --aero-text-glow: 0 0 10px #0d2540, 0 0 8px #0d2540;
   }
 
-  /* 全局页面背景：壁纸固定附着 + 覆盖一层极淡玻璃，让内容面板更突出 */
-  body {
+  /* 全局页面背景：壁纸固定附着 + 覆盖一层极淡玻璃，让内容面板更突出。
+     限定在 html.aero7-theme，确保后台/设置界面使用默认主题自己的背景。 */
+  html.aero7-theme body {
     background-image: var(--fuwari-page-bg);
     background-size: cover;
     background-position: center;
