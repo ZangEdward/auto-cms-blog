@@ -959,7 +959,7 @@ html.aero7-theme .aero-taskbar {
   user-select: none;
 }
 
-/* 圆球：Win7 "Start" Orb 风格（站点 logo/头像 + 站点名 + 签名） */
+/* 圆球：Win7 "Start" Orb 风格（站点 logo/头像 + 站点名） */
 html.aero7-theme .aero-taskbar-orb {
   display: flex;
   align-items: center;
@@ -1007,8 +1007,7 @@ html.aero7-theme .aero-taskbar-avatar {
 
 html.aero7-theme .aero-taskbar-brand {
   display: flex;
-  flex-direction: column;
-  gap: 1px;
+  align-items: center;
   min-width: 0;
   max-width: 14rem;
   line-height: 1;
@@ -1021,19 +1020,6 @@ html.aero7-theme .aero-taskbar-title {
   overflow: hidden;
   text-overflow: ellipsis;
   letter-spacing: 0.01em;
-}
-
-/* 签名横线：Win7 任务栏时间下方那条细横线，这里用作 tagline */
-html.aero7-theme .aero-taskbar-tagline {
-  font-size: 10px;
-  font-weight: 400;
-  opacity: 0.9;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  padding-bottom: 1px;
-  max-width: 14rem;
 }
 
 /* 任务按钮区（Aero Glass toolbar） */
