@@ -32,7 +32,7 @@ export function PostCard({
 
   return (
     <article
-      className={`window glass flex flex-col w-full relative ${
+      className={`aero-win flex flex-col w-full relative ${
         pinned ? "ring-2 ring-(--fuwari-primary)/30" : ""
       }`}
     >
