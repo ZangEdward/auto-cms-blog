@@ -33,8 +33,8 @@ button {
     --fuwari-radius-large: 10px;
     --fuwari-content-delay: 150ms;
     --fuwari-hue: 215;
-    --fuwari-page-width: 62rem;
-    --fuwari-toc-width: calc((100vw - var(--fuwari-page-width)) / 2 - 1rem);
+    --fuwari-page-width: 75rem;
+    --fuwari-toc-width: min(calc((100vw - var(--fuwari-page-width)) / 2 - 1rem), 18rem);
 
     /* ===== Frutiger Aero 调色板 ===== */
     /* 主色：经典 Aero 蓝（hexo-theme-aero: #3c7fb1） */
