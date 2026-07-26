@@ -28,13 +28,27 @@ export function PublicLayout({
     typeof window !== "undefined" ? window.location.pathname : "/";
   const isHome = pathname === "/" || pathname === "";
 
-  const aero7HomeBg = siteConfig.theme.aero7?.homeBg;
+  // 壁纸来源（按优先级）：
+  //   1. 用户后台为 aero7 主题单独设置的 homeBg
+  //   2. 用户后台 default 主题设置的 homeImage/globalImage
+  //   3. blogConfig 中的 fallback
+  // 关键：如果 aero7.homeBg 等于 blogConfig 默认值（旧说明它是没设置时的占位），
+  // 就视为未设置，回落到 default.background。
+  const DEFAULT_AERO_HOME_BG = "/images/aero-wallpaper.jpg";
+  const aero7HomeBg =
+    siteConfig.theme.aero7?.homeBg &&
+    siteConfig.theme.aero7.homeBg !== DEFAULT_AERO_HOME_BG
+      ? siteConfig.theme.aero7.homeBg
+      : undefined;
   const defaultBg = siteConfig.theme.default?.background;
   const bgUrl = isHome
-    ? aero7HomeBg || defaultBg?.homeImage
+    ? aero7HomeBg ||
+      defaultBg?.homeImage ||
+      DEFAULT_AERO_HOME_BG
     : aero7HomeBg ||
       defaultBg?.globalImage ||
-      defaultBg?.homeImage;
+      defaultBg?.homeImage ||
+      DEFAULT_AERO_HOME_BG;
 
   return (
     <div className="aero7-theme relative flex h-screen flex-col overflow-hidden">
