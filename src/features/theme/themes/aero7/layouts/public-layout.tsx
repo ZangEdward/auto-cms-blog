@@ -60,8 +60,8 @@ export function PublicLayout({
       DEFAULT_AERO_HOME_BG;
 
   return (
-    <div className="relative flex h-screen flex-col overflow-hidden">
-      {/* Win7 任务栏 */}
+    <div className="relative flex min-h-screen flex-col">
+      {/* Win7 任务栏 — 用 sticky 置顶 */}
       <Navbar
         navOptions={navOptions}
         user={user}
